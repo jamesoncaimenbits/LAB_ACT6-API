@@ -45,16 +45,25 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 /** @var object $router **/
 // Auth routes
 
-$router->get('/auth/login', 'Auth::login');
-$router->post('/auth/login', 'Auth::login');
-$router->get('/auth/logout', 'Auth::logout');
-// Product CRUD routes
-$router->get('/products', 'Products::index')->middleware('AuthMiddleware');
-$router->get('/products/create', 'Products::create')->middleware('AuthMiddleware');
-$router->post('/products/create', 'Products::create')->middleware('AuthMiddleware');
-$router->get('/products/edit/{id}', 'Products::edit')->middleware('AuthMiddleware');
-$router->post('/products/edit/{id}', 'Products::edit')->middleware('AuthMiddleware');
-$router->get('/products/delete/{id}', 'Products::delete')->middleware('AuthMiddleware');
+// Migration Routes
+//$router->get('create-migration/{migration_class}', 'MigrationController::create_migration');
+//$router->get('migrate', 'MigrationController::migrate');
+//$router->get('rollback', 'MigrationController::rollback');
+//$router->get('rollback-all', 'MigrationController::rollback_all');
+//$router->get('refresh', 'MigrationController::refresh');
+//$router->get('status', 'MigrationController::status');
+
+// Auth routes
+$router->post('api/login',   'AuthController::login');
+$router->post('api/refresh', 'AuthController::refresh');
+$router->post('api/logout',  'AuthController::logout');
+
+// API routes
+$router->get('api/products',          'ProductController::index');
+$router->post('api/products',         'ProductController::store');
+$router->put('api/products/{id}',     'ProductController::update');
+$router->delete('api/products/{id}',  'ProductController::destroy');
 
 $router->get('/', 'Welcome::index');
+
   

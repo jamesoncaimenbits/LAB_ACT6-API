@@ -1,0 +1,52 @@
+<?php
+
+class Create_products_table {
+
+    private $_lava;
+    protected $dbforge;
+
+    public function __construct()
+    {
+        $this->_lava = lava_instance();
+        $this->_lava->call->dbforge();
+    }
+
+    public function up()
+    {
+        $this->_lava->dbforge->add_field([
+            'id' => [
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => TRUE,
+                'auto_increment' => TRUE
+            ],
+            'product_name' => [
+                'type'       => 'VARCHAR',
+                'constraint' => 100
+            ],
+            'description' => [
+                'type' => 'TEXT',
+                'null' => TRUE
+            ],
+            'price' => [
+                'type'       => 'DECIMAL',
+                'constraint' => '10,2',
+                'default'    => 0.00
+            ],
+            'quantity' => [
+                'type'       => 'INT',
+                'constraint' => 11,
+                'default'    => 0
+            ],
+            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP'
+        ]);
+
+        $this->_lava->dbforge->add_key('id', TRUE);
+        $this->_lava->dbforge->create_table('products');
+    }
+
+    public function down()
+    {
+        $this->_lava->dbforge->drop_table('products');
+    }
+}
